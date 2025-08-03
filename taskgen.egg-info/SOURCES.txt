@@ -1,0 +1,15 @@
+LICENSE
+README.md
+setup.py
+taskgen/__init__.py
+taskgen/cli.py
+taskgen/renderer.py
+taskgen/runner.py
+taskgen/templates.py
+taskgen/updater.py
+taskgen/writer.py
+taskgen.egg-info/PKG-INFO
+taskgen.egg-info/SOURCES.txt
+taskgen.egg-info/dependency_links.txt
+taskgen.egg-info/entry_points.txt
+taskgen.egg-info/top_level.txt

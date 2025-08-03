@@ -1,4 +1,4 @@
-#include "message.h"
+#include "middleware/message.h"
 
 void MessageSystem::send(TaskID to, const Message& msg) {
     {

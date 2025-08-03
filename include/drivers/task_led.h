@@ -1,7 +1,7 @@
 #ifndef TASK_LED_H
 #define TASK_LED_H
 
-#include "message.h"
+#include "middleware/message.h"
 
 void task_led(MessageSystem& sys);
 

@@ -10,7 +10,12 @@
 enum class TaskID
 {
     LED,
-    UART
+    UART,
+    LOG,
+    LCD,
+    BAT,
+    FOO,
+    BAR,
 };
 enum class MessageType
 {

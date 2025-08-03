@@ -1,7 +1,11 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Iinclude
 
-SRCS = src/main.cpp src/message.cpp tasks/task_led.cpp tasks/task_uart.cpp
+SRCS = src/app/main.cpp src/middleware/message.cpp src/drivers/task_led.cpp src/middleware/task_uart.cpp src/middleware/task_log.cpp src/drivers/task_lcd.cpp src/middleware/task_bat.cpp src/drivers/task_foo.cpp
+ src/drivers/task_bar.cpp
+
+
+
 
 OBJS = $(SRCS:.cpp=.o)
 
