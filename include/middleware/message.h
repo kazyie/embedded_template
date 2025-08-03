@@ -16,6 +16,7 @@ enum class TaskID
     BAT,
     FOO,
     BAR,
+    TEST,
 };
 enum class MessageType
 {
