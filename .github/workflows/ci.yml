@@ -10,17 +10,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-test:
+    build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: { compiler: [gcc, clang] }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install compilers
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.compiler }}" = "clang" ]; then
+            sudo apt-get install -y clang
+            echo "CXX=clang++" >> $GITHUB_ENV
+          else
+            sudo apt-get install -y g++
+            echo "CXX=g++" >> $GITHUB_ENV
+          fi
+      - name: Build
+        run: make -j"$(nproc)"
+      - name: Test
+        run: make test
+
+
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Lint
+        run: make lint
 
-      # 依存（g++, make など）※Runnerにだいたい入ってるが明示しておくと安心
-      - name: Install build tools
-        run: sudo apt-get update && sudo apt-get install -y build-essential
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Check formatting
+        shell: bash
+        run: |
+          FILES=$(find include src tests -type f \( -name '*.h' -o -name '*.hpp' -o -name '*.cpp' \))
+          # 変更があると非ゼロで落ちる
+          clang-format --dry-run --Werror $FILES
 
-      - name: Build
-        run: make -j
 
-      - name: Run unit tests
-        run: make test
+
