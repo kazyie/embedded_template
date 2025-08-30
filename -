@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="tests/bin/unit" errors="0" failures="0" tests="12" time="0.02011" timestamp="2025-08-15T14:42:01Z" doctest_version="2.4.12">
+    <testcase classname="tests/test_core.cpp" name="MessageSystem basic send/receive" time="0" status="run"/>
+    <testcase classname="tests/test_core.cpp" name="receive_for times out when no message" time="0.02011" status="run"/>
+    <testcase classname="tests/test_core.cpp" name="EventIO pack/unpack" time="0" status="run"/>
+    <testcase classname="tests/test_events.cpp" name="LED dispatch table compiles" time="0" status="run"/>
+    <testcase classname="tests/test_stats.cpp" name="MessageSystem stats increase on send/receive" time="0" status="run"/>
+  </testsuite>
+</testsuites>

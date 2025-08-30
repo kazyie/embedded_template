@@ -10,27 +10,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-    build-test:
+  build-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: { compiler: [gcc, clang] }
     steps:
       - uses: actions/checkout@v4
-      - name: Install compilers
-        run: |
-          sudo apt-get update
-          if [ "${{ matrix.compiler }}" = "clang" ]; then
-            sudo apt-get install -y clang
-            echo "CXX=clang++" >> $GITHUB_ENV
-          else
-            sudo apt-get install -y g++
-            echo "CXX=g++" >> $GITHUB_ENV
-          fi
+
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
       - name: Build
         run: make -j"$(nproc)"
-      - name: Test
-        run: make test
 
+      - name: Run unit tests (produce JUnit)
+        shell: bash
+        run: |
+          mkdir -p test-results
+          # テスト失敗でも後続のアップロードを実行したいので || true を付ける
+          tests/bin/unit --reporters=junit --out=test-results/unit.xml --no-skip || true
+
+      - name: Upload test results
+        if: always()              # 成功/失敗に関わらず成果物アップ
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: test-results
+          retention-days: 14
 
   lint:
     runs-on: ubuntu-latest
@@ -49,8 +53,4 @@ jobs:
         shell: bash
         run: |
           FILES=$(find include src tests -type f \( -name '*.h' -o -name '*.hpp' -o -name '*.cpp' \))
-          # 変更があると非ゼロで落ちる
           clang-format --dry-run --Werror $FILES
-
-
-

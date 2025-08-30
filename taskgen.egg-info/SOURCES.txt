@@ -3,6 +3,7 @@ README.md
 setup.py
 taskgen/__init__.py
 taskgen/cli.py
+taskgen/partials.py
 taskgen/renderer.py
 taskgen/runner.py
 taskgen/templates.py

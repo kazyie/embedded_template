@@ -1,24 +1,18 @@
 # taskgen/templates.py
+from .partials import (
+    MAIN_COMMON_INCLUDES, EVENT_IO_INCLUDE,
+    TASK_HEADER, EVENTS_HEADER,
+    DISPATCH_HEADER, HANDLERS_SOURCE,
+    TASK_MAIN, APP_MAIN, TEST_DISPATCH,
+)
 
-HEADER_TPL = """\
-#ifndef TASK_{UP}_H
-#define TASK_{UP}_H
-
-#include "middleware/message.h"
-
-void task_{low}(MessageSystem& sys);
-
-#endif // TASK_{UP}_H
-"""
-
-SOURCE_TPL = """\
-#include <iostream>
-#include "{layer}/task_{low}.h"
-
-void task_{low}(MessageSystem& sys) {{
-    Message msg = sys.receive(TaskID::{UP});
-    if (msg.type == MessageType::BLINK) {{
-        std::cout << "[{UP}] blink!\\n";
-    }}
-}}
-"""
+# そのまま外部から使われる名前に束ねる（後方互換）
+HEADER_TPL            = TASK_HEADER
+EVENTS_HEADER_TPL     = EVENTS_HEADER
+DISPATCH_HEADER_TPL   = DISPATCH_HEADER
+HANDLERS_SOURCE_TPL   = HANDLERS_SOURCE
+TASK_MAIN_TPL         = TASK_MAIN
+APP_MAIN_TPL          = APP_MAIN
+TEST_DISPATCH_TPL     = TEST_DISPATCH
+IO_HEADER_TPL         = None  # 使っていなければ None に（必要なら別途パーシャル追加）
+IO_SOURCE_TPL         = None
